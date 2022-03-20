@@ -7,6 +7,7 @@ import eliminarProductoHome from "../functions/eliminarProductoHome";
 //modales
 import ModalAnadir from "../components/ModalAnadir";
 import ModalEditar from "../components/ModalEditar";
+import filtrarDatos from "../functions/filtrarDatos";
 
 function Home({ usuario }) {
   const [productos, setProductos] = React.useState([]);
@@ -14,6 +15,13 @@ function Home({ usuario }) {
   const [isModalEditar, setIsModalEditar] = React.useState(false);
   const [productoEditar, setProductoEditar] = React.useState({});
 
+  //prevenimos que se recarge
+  async function busquedaFormHandler(e) {
+    e.preventDefault();
+    const busqueda = e.target.busqueda.value;
+    const nuevosDocumentos = await filtrarDatos(busqueda);
+    setProductos(nuevosDocumentos);
+  }
   //llamada de funcion
   function actualizarEstadoProductos() {
     getAllProducts().then((productos) => {
@@ -52,7 +60,7 @@ function Home({ usuario }) {
         <Button onClick={signOut}>Cerrar sesion</Button>
       </Stack>
       <hr />
-      <Form>
+      <Form onSubmit={busquedaFormHandler}>
         <Stack direction="horizontal">
           <Form.Group controlId="busqueda" className="w-75 m-3">
             <Form.Control type="text" placeholder="Buscar" />
