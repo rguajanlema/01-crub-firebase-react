@@ -1,8 +1,22 @@
 import React from "react";
 import signOut from "../functions/cerrarSesion";
 import { Container, Stack, Button, Form, Table } from "react-bootstrap";
+import getAllProducts from "../functions/getAllProducts";
 
 function Home({ usuario }) {
+  const [productos, setProductos] = React.useState([]);
+
+  //llamada de funcion
+  function actualizarEstadoProductos() {
+    getAllProducts().then((productos) => {
+      setProductos(productos);
+    });
+  }
+
+  React.useEffect(() => {
+    actualizarEstadoProductos();
+  }, []);
+
   return (
     <Container fluid>
       <Stack direction="horizontal" className="justify-content-between">
@@ -34,14 +48,20 @@ function Home({ usuario }) {
           </tr>
         </thead>
         <tbody>
-          <tr>
-            <td>1</td>
-            <td>Titulo</td>
-            <td>$100</td>
-            <td>10</td>
-            <td>1123BD</td>
-            <td>0</td>
-          </tr>
+          {productos &&
+            productos.map((producto, index) => (
+              <tr key={index}>
+                <td>{index + 1}</td>
+                <td>{producto.titulo}</td>
+                <td>{producto.precio}</td>
+                <td>{producto.cantidad}</td>
+                <td>{producto.sku}</td>
+                <td>
+                  <Button variant="dark">Editar</Button>
+                  <Button variant="danger">Eliminar</Button>
+                </td>
+              </tr>
+            ))}
         </tbody>
       </Table>
     </Container>
