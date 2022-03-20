@@ -1,3 +1,4 @@
+import React from "react";
 import { Modal, Stack, Button, Form } from "react-bootstrap";
 import anadirProducto from "../functions/anadirProducto";
 
@@ -6,6 +7,7 @@ function ModalEditar({
   setIsModalEditar,
   actualizarEstadoProductos,
   productoEditar,
+  setProductoEditar,
 }) {
   function editarProductoModal() {
     //obtener infor del formulario
@@ -18,12 +20,24 @@ function ModalEditar({
     const infoProducto = { titulo, precio, cantidad, sku };
     anadirProducto(infoProducto);
     //cerrar modal
+    //regresar estado a {false}
+    setProductoEditar(null);
     actualizarEstadoProductos();
     setIsModalEditar(false);
   }
 
+  const [productoEstado, setProductoEstado] = React.useState({
+    ...productoEditar,
+  });
+
   return (
-    <Modal show={isModalEditar} onHide={() => setIsModalEditar(false)}>
+    <Modal
+      show={isModalEditar}
+      onHide={() => {
+        setIsModalEditar(false);
+        setProductoEditar(null);
+      }}
+    >
       <Modal.Header>
         <Modal.Title>Editar producto</Modal.Title>
       </Modal.Header>
@@ -35,34 +49,64 @@ function ModalEditar({
               placeholder="titulo"
               type="text"
               className="mb-1"
-              value={productoEditar.titulo}
+              value={productoEstado?.titulo}
+              onChange={(event) =>
+                setProductoEstado({
+                  ...productoEstado,
+                  titulo: event.target.value,
+                })
+              }
             />
             <Form.Control
               id="precio"
               placeholder="precio"
               type="number"
               className="mb-1"
-              value={productoEditar.precio}
+              value={productoEstado?.precio}
+              onChange={(event) =>
+                setProductoEstado({
+                  ...productoEstado,
+                  precio: event.target.value,
+                })
+              }
             />
             <Form.Control
               id="cantidad"
               placeholder="cantidad"
               type="number"
               className="mb-1"
-              value={productoEditar.cantidad}
+              value={productoEstado?.cantidad}
+              onChange={(event) =>
+                setProductoEstado({
+                  ...productoEstado,
+                  cantidad: event.target.value,
+                })
+              }
             />
             <Form.Control
               id="sku"
               placeholder="sku"
               type="text"
               className="mb-1"
-              value={productoEditar.sku}
+              value={productoEstado?.sku}
+              onChange={(event) =>
+                setProductoEstado({
+                  ...productoEstado,
+                  sku: event.target.value,
+                })
+              }
             />
           </Stack>
         </Form>
       </Modal.Body>
       <Modal.Footer>
-        <Button variant="secondary" onClick={() => setIsModalEditar(false)}>
+        <Button
+          variant="secondary"
+          onClick={() => {
+            setIsModalEditar(false);
+            setProductoEditar(null);
+          }}
+        >
           Cancelar
         </Button>
         <Button variant="primary" onClick={editarProductoModal}>

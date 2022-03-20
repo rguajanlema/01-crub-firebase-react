@@ -44,6 +44,7 @@ function Home({ usuario }) {
           setIsModalEditar={setIsModalEditar}
           actualizarEstadoProductos={actualizarEstadoProductos}
           productoEditar={productoEditar}
+          setProductoEditar={setProductoEditar}
         />
       )}
       <Stack direction="horizontal" className="justify-content-between">
@@ -87,7 +88,7 @@ function Home({ usuario }) {
                   <Button
                     variant="dark"
                     onClick={() => {
-                      setProductoEditar(producto);
+                      setProductoEditar({ ...producto });
                       setIsModalEditar(true);
                     }}
                   >
