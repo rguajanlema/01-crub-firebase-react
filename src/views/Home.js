@@ -30,6 +30,7 @@ function Home({ usuario }) {
       <ModalAnadir
         isModalAnadir={isModalAnadir}
         setIsModalAnadir={setIsModalAnadir}
+        actualizarEstadoProductos={actualizarEstadoProductos}
       />
       <Stack direction="horizontal" className="justify-content-between">
         <p style={{ fontSize: 24 }}>Bienvenido,{usuario.email}</p>
