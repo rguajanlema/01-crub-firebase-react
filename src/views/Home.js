@@ -6,10 +6,13 @@ import eliminarProductoHome from "../functions/eliminarProductoHome";
 
 //modales
 import ModalAnadir from "../components/ModalAnadir";
+import ModalEditar from "../components/ModalEditar";
 
 function Home({ usuario }) {
   const [productos, setProductos] = React.useState([]);
   const [isModalAnadir, setIsModalAnadir] = React.useState(false);
+  const [isModalEditar, setIsModalEditar] = React.useState(false);
+  const [productoEditar, setProductoEditar] = React.useState({});
 
   //llamada de funcion
   function actualizarEstadoProductos() {
@@ -33,6 +36,16 @@ function Home({ usuario }) {
         setIsModalAnadir={setIsModalAnadir}
         actualizarEstadoProductos={actualizarEstadoProductos}
       />
+
+      {/**si el producto existe para editar entra en esta condicion */}
+      {productoEditar && (
+        <ModalEditar
+          isModalEditar={isModalEditar}
+          setIsModalEditar={setIsModalEditar}
+          actualizarEstadoProductos={actualizarEstadoProductos}
+          productoEditar={productoEditar}
+        />
+      )}
       <Stack direction="horizontal" className="justify-content-between">
         <p style={{ fontSize: 24 }}>Bienvenido,{usuario.email}</p>
         <Button onClick={signOut}>Cerrar sesion</Button>
@@ -71,7 +84,15 @@ function Home({ usuario }) {
                 <td>{producto.cantidad}</td>
                 <td>{producto.sku}</td>
                 <td>
-                  <Button variant="dark">Editar</Button>
+                  <Button
+                    variant="dark"
+                    onClick={() => {
+                      setProductoEditar(producto);
+                      setIsModalEditar(true);
+                    }}
+                  >
+                    Editar
+                  </Button>
                   <Button
                     variant="danger"
                     onClick={() => {
