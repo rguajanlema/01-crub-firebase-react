@@ -2,6 +2,7 @@ import React from "react";
 import signOut from "../functions/cerrarSesion";
 import { Container, Stack, Button, Form, Table } from "react-bootstrap";
 import getAllProducts from "../functions/getAllProducts";
+import eliminarProductoHome from "../functions/eliminarProductoHome";
 
 //modales
 import ModalAnadir from "../components/ModalAnadir";
@@ -71,7 +72,17 @@ function Home({ usuario }) {
                 <td>{producto.sku}</td>
                 <td>
                   <Button variant="dark">Editar</Button>
-                  <Button variant="danger">Eliminar</Button>
+                  <Button
+                    variant="danger"
+                    onClick={() => {
+                      //una vez borrado se actualiza la informacion
+                      eliminarProductoHome(producto).then((confirmacion) => {
+                        actualizarEstadoProductos();
+                      });
+                    }}
+                  >
+                    Eliminar
+                  </Button>
                 </td>
               </tr>
             ))}
