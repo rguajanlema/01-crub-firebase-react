@@ -3,8 +3,12 @@ import signOut from "../functions/cerrarSesion";
 import { Container, Stack, Button, Form, Table } from "react-bootstrap";
 import getAllProducts from "../functions/getAllProducts";
 
+//modales
+import ModalAnadir from "../components/ModalAnadir";
+
 function Home({ usuario }) {
   const [productos, setProductos] = React.useState([]);
+  const [isModalAnadir, setIsModalAnadir] = React.useState(false);
 
   //llamada de funcion
   function actualizarEstadoProductos() {
@@ -13,12 +17,20 @@ function Home({ usuario }) {
     });
   }
 
+  function anadirProductoHome() {
+    setIsModalAnadir(true);
+  }
+
   React.useEffect(() => {
     actualizarEstadoProductos();
   }, []);
 
   return (
     <Container fluid>
+      <ModalAnadir
+        isModalAnadir={isModalAnadir}
+        setIsModalAnadir={setIsModalAnadir}
+      />
       <Stack direction="horizontal" className="justify-content-between">
         <p style={{ fontSize: 24 }}>Bienvenido,{usuario.email}</p>
         <Button onClick={signOut}>Cerrar sesion</Button>
@@ -64,6 +76,7 @@ function Home({ usuario }) {
             ))}
         </tbody>
       </Table>
+      <Button onClick={anadirProductoHome}>Anadir Producto</Button>
     </Container>
   );
 }
