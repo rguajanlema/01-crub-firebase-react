@@ -1,12 +1,19 @@
 import React from "react";
 import signOut from "../functions/cerrarSesion";
+import { Container, Stack, Button, Form } from "react-bootstrap";
 
-function Home() {
+function Home({ usuario }) {
   return (
-    <div>
-      <button onClick={signOut}>Cerrar sesion</button>
-      Bienvenido
-    </div>
+    <Container fluid>
+      <Stack direction="horizontal">
+        <p style={{ fontSize: 24 }}>Bienvenido,{usuario.email}</p>
+        <Button onClick={signOut}>Cerrar sesion</Button>
+      </Stack>
+      <hr />
+      <Form>
+        <Stack></Stack>
+      </Form>
+    </Container>
   );
 }
 

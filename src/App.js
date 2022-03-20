@@ -21,7 +21,11 @@ function App() {
     }
   });
 
-  return <Container fluid>{usuario ? <Home /> : <Login />}</Container>;
+  return (
+    <Container fluid>
+      {usuario ? <Home usuario={usuario} /> : <Login />}
+    </Container>
+  );
 }
 
 export default App;
