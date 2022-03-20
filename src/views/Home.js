@@ -1,7 +1,13 @@
 import React from "react";
+import signOut from "../functions/cerrarSesion";
 
-const Home = () => {
-  return <div>Home</div>;
-};
+function Home() {
+  return (
+    <div>
+      <button onClick={signOut}>Cerrar sesion</button>
+      Bienvenido
+    </div>
+  );
+}
 
 export default Home;
