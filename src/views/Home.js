@@ -68,7 +68,16 @@ function Home({ usuario }) {
           <Button variant="dark" type="submit">
             Buscar
           </Button>
-          <Button variant="light">Resetear</Button>
+          <Button
+            variant="light"
+            onClick={() => {
+              const input = document.getElementById("busqueda");
+              input.value = "";
+              actualizarEstadoProductos();
+            }}
+          >
+            Resetear
+          </Button>
         </Stack>
       </Form>
       <hr />
